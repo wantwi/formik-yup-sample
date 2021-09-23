@@ -7,6 +7,9 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import {connect,useDispatch} from 'react-redux';
+import {addUser} from "./redux/user/user.action"
+import {selectAddUser} from "./redux/user/user.selector"
 
 // validationSchema={Yup.object({
 //   firstName: Yup.string()
@@ -39,6 +42,7 @@ let schema = yup.object().shape({
 });
 
 function App() {
+  const dispatch = useDispatch()
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -49,8 +53,8 @@ function App() {
     },
     validationSchema:schema,
     onSubmit: values => {
-      console.log(JSON.stringify(values, null, 2));
-      document.querySelector('#div').innerHTML = JSON.stringify(values, null, 2)
+      dispatch(addUser(values))
+    
     },
   });
 
@@ -122,5 +126,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
